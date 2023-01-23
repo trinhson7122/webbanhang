@@ -12,4 +12,14 @@ class Cart extends Model
         'user_id'
     ];
 
+    public function sumCart()
+    {
+        $sum = 0;
+        $cd = CartDetail::query()->where('cart_id', '=', $this->id)->get();
+        foreach($cd as $item)
+        {
+            $sum += $item->amount * $item->product->price;
+        }
+        return $sum;
+    }
 }
