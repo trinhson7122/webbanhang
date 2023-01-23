@@ -6,5 +6,6 @@
     <div class="container-fluid">
         @yield('client_content')
     </div>
+    @include('client.layouts.footer')
 </div>
 @endsection
