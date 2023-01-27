@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\Provide;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,6 +18,28 @@ class AuthController extends Controller
     {
         $title = 'Login';
         return view('auth.login', ['title' => $title]);
+    }
+
+    public function userRegister()
+    {
+        $title = 'Register';
+        return view('auth.register', ['title' => $title]);
+    }
+
+    public function processUserRegister(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'name' => 'required|string',
+            'password' => 'required|string|min:6',
+        ]);
+        $user = User::create([
+            'email' => $validated['email'],
+            'name' => $validated['name'],
+            'password' => Hash::make($validated['password']),
+        ]);
+        Auth::login($user);
+        return redirect()->intended();
     }
 
     public function userLogout(Request $request)
@@ -98,6 +121,6 @@ class AuthController extends Controller
             ]);
         }
         Auth::login($user);
-        return redirect()->intended('/');
+        //return redirect()->intended('/');
     }
 }

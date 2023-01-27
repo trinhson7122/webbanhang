@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-xl navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="/"><img src="{{ asset('images/logo.png') }}" width="50" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -19,8 +19,8 @@
           <a class="nav-link text-dark bold" href="#">SẢN PHẨM</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <form class="form-inline my-2 my-lg-0" method="get">
+        <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
         <a href="{{ route('cart') }}" class="btn btn-warning my-2 my-sm-0 ml-2 mr-2">Giỏ hàng</a>
         @auth
@@ -36,6 +36,10 @@
                   <i class="mdi mdi-account-circle mr-1"></i>
                   <span>Tài khoản của tôi</span>
               </a>
+              <a href="{{ route('myOrder') }}" class="dropdown-item notify-item">
+                <i class="mdi mdi-cart mr-1"></i>
+                <span>Các đơn đã đặt</span>
+            </a>
               <a href="{{ route('auth.logout') }}" class="dropdown-item notify-item">
                   <i class="mdi mdi-logout mr-1"></i>
                   <span>Đăng xuất</span>
@@ -45,7 +49,7 @@
         @endauth
         @guest
           <a href="{{ route('auth.login') }}" class="btn btn-danger my-2 my-sm-0">Đăng nhập</a>
-          <button class="btn btn-success my-2 my-sm-0 ml-2 mr-2" type="button">Đăng ký</button>
+          <a href="{{ route('auth.register') }}" class="btn btn-success my-2 my-sm-0 ml-2 mr-2">Đăng ký</a>
         @endguest
       </form>
     </div>

@@ -14,5 +14,5 @@ final class OrderStatus extends Enum
     const Cancelled = 0;
     const Processing = 1;
     const Shipping = 2;
-    const Delivered = 3;
+    const Shipped = 3;
 }

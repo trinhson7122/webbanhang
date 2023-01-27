@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartDetail;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,13 +12,15 @@ use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Trang chủ';
         $count = 4;
         $per_page = 8;
-        $newProducts = Product::query()->orderBy('id', 'desc')->get()->take($count);
-        $products = Product::query()->simplePaginate($per_page);
+        $s = $request->get('search');
+        $newProducts = Product::query()->orderBy('id', 'desc')->where('name', 'like', "%$s%")->get()->take($count);
+        $products = Product::query()->where('name', 'like', "%$s%")
+        ->simplePaginate($per_page)->appends('search', $s);
         return view('client.index', [
             'title' => $title,
             'newProducts' => $newProducts,
@@ -84,8 +87,22 @@ class IndexController extends Controller
     public function checkout()
     {
         $title = 'Thủ tục thanh toán';
+        $cart = Cart::query()->where('user_id', '=', auth()->user()->id)->first();
+        $cartDetails = CartDetail::query()->where('cart_id', '=', $cart->id)->get();
         return view('client.checkout', [
             'title' => $title,
+            'cart' => $cart,
+            'cartDetails' => $cartDetails,
+        ]);
+    }
+
+    public function myOrder()
+    {
+        $title = 'Yêu cầu';
+        $orders = Order::query()->where('user_id', '=', auth()->user()->id)->get();
+        return view('client.myOrder', [
+            'title' => $title,
+            'orders' => $orders,
         ]);
     }
 }

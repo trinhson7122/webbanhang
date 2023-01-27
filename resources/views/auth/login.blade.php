@@ -66,7 +66,7 @@
 
                 <div class="row mt-3">
                     <div class="col-12 text-center">
-                        <p class="text-muted">Chưa có tài khoản?<a href="pages-register.html" class="text-muted ml-1"><b>Đăng ký</b></a></p>
+                        <p class="text-muted">Chưa có tài khoản?<a href="{{ route('auth.register') }}" class="text-muted ml-1"><b>Đăng ký</b></a></p>
                     </div> <!-- end col -->
                 </div>
                 <!-- end row -->

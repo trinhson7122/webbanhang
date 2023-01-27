@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Illuminate\Auth\Authenticatable as AuthAuthenticatable;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,4 +23,8 @@ class User extends Model implements Authenticatable
         'remember_token',
         'access_token'
     ];
+    public function printRole()
+    {
+        return array_search($this->role, UserRole::asArray());
+    }
 }

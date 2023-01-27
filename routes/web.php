@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -48,15 +49,22 @@ Route::middleware('client')->group(function () {
     Route::get('logout', [AuthController::class, 'userLogout'])->name('auth.logout');
     //
     Route::get('profile', [IndexController::class, 'profile'])->name('profile');
+    Route::get('myOrder', [IndexController::class, 'myOrder'])->name('myOrder');
     Route::get('checkout', [IndexController::class, 'checkout'])->name('checkout');
     Route::get('edit-profile/{id}', [UserController::class, 'show'])->name('profile.edit');
     Route::put('update-profile/{id}', [UserController::class, 'update'])->name('profile.update');
+
+    Route::post('order', [OrderController::class, 'store'])->name('order.store');
+    Route::get('success', [OrderController::class, 'store'])->name('order.store');
+    Route::view('success', 'client.orderSuccess', ['title' => 'Thành công'])->name('order.success');
+    
 });
 Route::middleware('not_client')->group(function () {
     //auth
     Route::get('login', [AuthController::class, 'userLogin'])->name('auth.login');
     Route::post('login', [AuthController::class, 'processUserLogin'])->name('auth.logining');
     Route::get('register', [AuthController::class, 'userRegister'])->name('auth.register');
+    Route::post('register', [AuthController::class, 'processUserRegister'])->name('auth.registering');
     Route::get('auth/redirect/{provider}', [AuthController::class, 'socialiteRedirect'])->name('auth.socialite_redirect');
     Route::get('auth/callback/{provider}', [AuthController::class, 'socialiteCallback'])->name('auth.socialite_callback');
 });
@@ -95,5 +103,8 @@ Route::middleware('admin')->group(function(){
                 Route::get('coupon_manager', 'couponManager')->name('coupon_manager');
             });
         });
+
+        Route::get('logout', [AuthController::class, 'adminLogout'])->name('auth.admin_logout');
+
     });
 });
