@@ -50,7 +50,7 @@
                             <p class="text-muted">Hoặc đăng nhập bằng mạng xã hội</p>
                             <ul class="social-list list-inline">
                                 <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
+                                    <a href="{{ route('auth.socialite_redirect', 'facebook') }}" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
                                     <a href="{{ route('auth.socialite_redirect', 'google') }}" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>

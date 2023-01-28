@@ -107,11 +107,12 @@ class CouponController extends Controller
             'name' => 'string',
         ]);
         $coupon = Coupon::query()->where('name', '=', $validated['name'])->get()->first();
+        //dd($coupon);
         if($coupon != null){
-            session()->put('discount', $coupon->discount);
+            session()->put('coupon_id', $coupon->id);
         }
         else{
-            session()->put('discount', 0);
+            session()->put('coupon_id', 0);
         }
         return to_route('cart');
     }

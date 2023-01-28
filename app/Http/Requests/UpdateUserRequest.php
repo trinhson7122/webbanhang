@@ -57,6 +57,7 @@ class UpdateUserRequest extends FormRequest
             'phone.required' => "Số điện thoại không được để trống",
             'phone.numeric' => "Số điện thoại phải là số",
             'phone.unique' => "Số điện thoại đã tồn tại",
+            'image.image' => "File phải là hình ảnh",
         ];
     }
 }

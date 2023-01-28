@@ -7,6 +7,14 @@ $(document).ready(function () {
         getCoupon($(this).parents('form')[0]);         
     });
     //
+    $(document).on('click', '.btn-view-order', function(e){      
+        getOrderDetails($(this).parents('form')[0]);         
+    });
+    //
+    $(document).on('click', '.btn-view-order1', function(e){      
+        getOrderDetailsClient($(this).parents('form')[0]);         
+    });
+    //
     $(document).on('click', '.btn-add-to-cart', function(e){      
         addToCart($(this).parents('form')[0]);         
     });
@@ -15,7 +23,7 @@ $(document).ready(function () {
         updateCart($(this).parents('form')[0]);         
     });
     //popup social
-    $(document).on('click', '.social-list-item', function(e){     
+    $(document).on('click', '.social-list-item1', function(e){     
         e.preventDefault();
         let text = "sonne/callback/sad";
         let url = $(this).attr('href');
@@ -27,5 +35,30 @@ $(document).ready(function () {
             }
         }, 100);
         //updateCart($(this).parents('form')[0]);         
+    });
+    //
+    // $(document).on('click', '.confirm-submit', function(e){  
+    //     $(this).parent().submit(function (e) { 
+    //         e.preventDefault();
+    //         console.log($(this));     
+    //     });    
+    // });
+    $('.confirm-submit').click(function (e) { 
+        e.preventDefault();
+        let result = confirm('Bạn có chắc chắn muốn xóa không?');
+        if(result){
+            $(this).parent().submit();
+        }
+    });
+    //
+    // $('#view-order-modal').on('show.bs.modal', function(e){      
+    //     alert(1);    
+    //     $.each(collection, function (indexInArray, valueOfElement) { 
+             
+    //     });     
+    // });
+    $(document).on('click', '.btn-show-status', function(e){
+        let action = $(this).parent('form')[0].action;
+        $('#update-status-order-modal form').attr('action', action);
     });
 });

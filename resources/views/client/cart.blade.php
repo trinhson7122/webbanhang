@@ -94,11 +94,11 @@
                                             </tr>
                                             <tr>
                                                 <td>Discount : </td>
-                                                <td>-{{ printMoney(arrSumCart(session()->get('cart')) * session()->get('discount') / 100) }}</td>
+                                                <td>-{{ printMoney(arrSumCart(session()->get('cart')) * $discount / 100) }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Thành tiền :</th>
-                                                <td>{{ printMoney(arrSumCart(session()->get('cart')) * (1 - session()->get('discount') / 100)) }}</td>
+                                                <td>{{ printMoney(arrSumCart(session()->get('cart')) * (1 - $discount / 100)) }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

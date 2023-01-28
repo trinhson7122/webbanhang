@@ -55,7 +55,9 @@ Route::middleware('client')->group(function () {
     Route::put('update-profile/{id}', [UserController::class, 'update'])->name('profile.update');
 
     Route::post('order', [OrderController::class, 'store'])->name('order.store');
+    Route::put('order/{order}', [OrderController::class, 'update'])->name('order.update');
     Route::get('success', [OrderController::class, 'store'])->name('order.store');
+    Route::get('showOrderDetails/{order}', [OrderController::class, 'showOrderDetails'])->name('order.showOrderDetails');
     Route::view('success', 'client.orderSuccess', ['title' => 'Thành công'])->name('order.success');
     
 });
@@ -94,6 +96,12 @@ Route::middleware('admin')->group(function(){
                 Route::get('coupon/{coupon}', 'show')->name('show');
             });
         });
+        //order
+        Route::controller(OrderController::class)->group(function (){
+            Route::name('order.')->group(function (){
+                Route::delete('order/{order}', 'destroy')->name('destroy');
+            });
+        });
         //
         Route::name('admin.')->group(function (){
             Route::controller(AdminController::class)->group(function(){
@@ -101,6 +109,7 @@ Route::middleware('admin')->group(function(){
                 Route::get('product_manager', 'productManager')->name('product_manager');
                 Route::get('user_manager', 'userManager')->name('user_manager');
                 Route::get('coupon_manager', 'couponManager')->name('coupon_manager');
+                Route::get('order_manager', 'orderManager')->name('order_manager');
             });
         });
 

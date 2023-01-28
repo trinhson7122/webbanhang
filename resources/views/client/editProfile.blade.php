@@ -16,7 +16,7 @@
             <div class="col-sm-4"></div>
             <div class="col-md-4">
                 <div class="card-body">
-                    <form action="{{ route('profile.update', $user->id) }}" method="post">
+                    <form enctype="multipart/form-data" action="{{ route('profile.update', $user->id) }}" method="post">
                         @csrf
                         @method('put')
                         <img src="{{ $user->image }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">

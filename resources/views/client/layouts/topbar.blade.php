@@ -12,12 +12,6 @@
         <li class="nav-item">
           <a class="nav-link text-dark bold" href="{{ route('cart') }}">GIỎ HÀNG</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark bold" href="#">VỀ CHÚNG TÔI</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark bold" href="#">SẢN PHẨM</a>
-        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" method="get">
         <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

@@ -12,7 +12,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'sum_price',
-        'discount',
+        'coupon_id',
         'note',
         'phone',
         'address',
@@ -38,9 +38,13 @@ class Order extends Model
             case OrderStatus::Shipped:
                 return 'text-success';
             case OrderStatus::Shipping:
-                return 'text-warning';
+                return 'text-info';
             case OrderStatus::Processing:
                 return 'text-warning';
         }
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

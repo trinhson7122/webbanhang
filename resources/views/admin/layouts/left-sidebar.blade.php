@@ -47,14 +47,8 @@
                 </a>
             </li>
             <li class="side-nav-item">
-                <a href="" class="side-nav-link">
+                <a href="{{ route('admin.order_manager') }}" class="side-nav-link">
                     <i class="uil-cart"></i>
-                    <span>Quản lý giỏ hàng</span>
-                </a>
-            </li>
-            <li class="side-nav-item">
-                <a href="" class="side-nav-link">
-                    <i class="uil-processor"></i>
                     <span>Quản lý yêu cầu</span>
                 </a>
             </li>

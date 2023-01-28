@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coupon;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -88,6 +89,19 @@ class AdminController extends Controller
         return view('admin.coupon.index', [
             'title' => $this->title,
             'coupons' => $coupons,
+        ]);
+    }
+
+    public function orderManager(Request $search)
+    {
+        $this->title = 'Order Manager';
+        $per_page = 10;
+        $s = $search->get('search');
+        $orders = Order::query()->where('phone', 'like', "%$s%")->orderByDesc('id')
+        ->paginate($per_page)->appends('search', $s);
+        return view('admin.order.index', [
+            'title' => $this->title,
+            'orders' => $orders,
         ]);
     }
 }

@@ -58,7 +58,7 @@
                                 <form action="{{ route('coupon.destroy', $each->id) }}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger">Xóa</button>
+                                    <button class="confirm-submit btn btn-danger">Xóa</button>
                                 </form>
                             </td>
                         </tr>

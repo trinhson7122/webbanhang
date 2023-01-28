@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedDouble('sum_price');
-            $table->integer('discount')->default(0);
+            $table->unsignedBigInteger('coupon_id')->nullable()->default(0);
             $table->string('note')->nullable();
             $table->string('phone', 12);
             $table->string('address');

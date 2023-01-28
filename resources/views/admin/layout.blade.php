@@ -8,4 +8,9 @@
     </div>
     @include('admin.layouts.footer')
 </div>
+<script>
+    setInterval(() => {
+        location.reload();
+    }, 1000 * 60);
+</script>
 @endsection

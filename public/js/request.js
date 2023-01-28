@@ -22,6 +22,30 @@ function getCoupon(form)
     });
 }
 
+function getOrderDetails(form)
+{
+    $.ajax({
+        type: "get",
+        url: form.action,
+        dataType: "json",
+        success: function (response) {
+            fillOrderDetails('#view-order-modal', response);
+        },
+    });
+}
+
+function getOrderDetailsClient(form)
+{
+    $.ajax({
+        type: "get",
+        url: form.action,
+        dataType: "json",
+        success: function (response) {
+            fillOrderDetails('#view-order-modal', response);
+        },
+    });
+}
+
 function addToCart(form)
 {
     let data = new FormData(form);

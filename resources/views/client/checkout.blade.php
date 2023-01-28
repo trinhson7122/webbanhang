@@ -140,7 +140,7 @@
                                                                 Giảm giá: 
                                                             </span>
                                                             <span>
-                                                                -{{ printMoney($cart->sumCart() * (session()->get('discount') / 100)) }}
+                                                                -{{ printMoney($cart->sumCart() * ($discount / 100)) }}
                                                             </span>
                                                         </td>
                                                     </tr>
@@ -151,7 +151,7 @@
                                                                     Thành tiền: 
                                                                 </span>
                                                                 <span>
-                                                                    {{ printMoney($cart->sumCart() * (1 - session()->get('discount') / 100)) }}
+                                                                    {{ printMoney($cart->sumCart() * (1 - $discount / 100)) }}
                                                                 </span>
                                                             </td>
                                                         </tr>

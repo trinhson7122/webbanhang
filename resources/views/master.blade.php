@@ -27,5 +27,6 @@
         <script src="{{ asset('js/helper.js') }}"></script>
         <script src="{{ asset('/js/request.js') }}"></script>
         <script src="{{ asset('/js/main.js') }}"></script>
+        <script src="{{ asset('js/apexcharts.min.js') }}"></script>
     </body>
 </html>

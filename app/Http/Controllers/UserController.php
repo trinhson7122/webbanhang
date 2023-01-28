@@ -105,6 +105,15 @@ class UserController extends Controller
     {
         $validated = $request->validated();
         $user = User::find($id);
+        if($request->has('image')){
+            $t = Storage::disk('public')->delete(str_replace("storage/", '', $user->image));
+            $name = 'user' . time() . '.' . $request->file('image')->extension();
+            $file_name = $request->file('image')->storeAs('images/users', $name ,  'public');
+            //dd($t);
+            $user->update([
+                'image' => Storage::url($file_name),
+            ]);
+        }
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],

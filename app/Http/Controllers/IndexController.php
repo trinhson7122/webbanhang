@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartDetail;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -31,6 +32,7 @@ class IndexController extends Controller
     public function cart()
     {
         $title = 'Giỏ hàng';
+        $coupon = Coupon::find(session()->get('coupon_id'));
         if(Auth::check()){
             //nếu người dùng đã có giỏ hàng thì reset session và tạo session dựa trên CartDetail
             $cart = Cart::query()->where('user_id', '=', auth()->user()->id)->first();
@@ -69,9 +71,14 @@ class IndexController extends Controller
             }
             
         }
-        return view('client.cart', [
+        $arrData = [
             'title' => $title,
-        ]);
+            'discount' => 0,
+        ];
+        if($coupon){
+            $arrData['discount'] = $coupon->discount;
+        }
+        return view('client.cart', $arrData);
     }
 
     public function profile()
@@ -87,19 +94,25 @@ class IndexController extends Controller
     public function checkout()
     {
         $title = 'Thủ tục thanh toán';
+        $coupon = Coupon::find(session()->get('coupon_id'));
         $cart = Cart::query()->where('user_id', '=', auth()->user()->id)->first();
         $cartDetails = CartDetail::query()->where('cart_id', '=', $cart->id)->get();
-        return view('client.checkout', [
+        $arrData = [
             'title' => $title,
             'cart' => $cart,
             'cartDetails' => $cartDetails,
-        ]);
+            'discount' => 0,
+        ];
+        if($coupon){
+            $arrData['discount'] = $coupon->discount;
+        }
+        return view('client.checkout', $arrData);
     }
 
     public function myOrder()
     {
         $title = 'Yêu cầu';
-        $orders = Order::query()->where('user_id', '=', auth()->user()->id)->get();
+        $orders = Order::query()->where('user_id', '=', auth()->user()->id)->orderByDesc('id')->get();
         return view('client.myOrder', [
             'title' => $title,
             'orders' => $orders,

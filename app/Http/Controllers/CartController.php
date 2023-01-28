@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartDetail;
+use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class CartController extends Controller
         $product_id = $rq['product_id'];
         $product = Product::query()->findOrFail($product_id);
         $arrCart = session()->get('cart');
-        $discount = session()->get('discount', 0);
+        $discount = session()->get('coupon_id', 0);
         $cart_detail_id = $arrCart[$product_id]['cart_detail_id'] ?? 0;
         if(Auth::check()){
             $cart = Cart::query()->where('user_id', '=', auth()->user()->id)->get()->first();
@@ -102,7 +103,7 @@ class CartController extends Controller
             }
         }
         session()->put('cart', $arrCart);
-        session()->put('discount', $discount);
+        session()->put('coupon_id', $discount);
         //return to_route('index');
         return response()->json([
             'data' => $arrCart,
