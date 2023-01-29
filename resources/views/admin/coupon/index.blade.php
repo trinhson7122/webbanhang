@@ -48,7 +48,7 @@
                             <td>{{ $each->discount }}</td>
                             <td>{{ $each->amount }}</td>
                             <td>{{ $each->user->name }}</td>
-                            <td>{{ $each->created_at }}</td>
+                            <td>{{ DateTimeForHuman($each->created_at) }}</td>
                             <td>
                                 <form action="{{ route('coupon.show', $each->id) }}" method="get">
                                     <button data-toggle="modal" data-target="#edit-coupon-modal" type="button" class="btn btn-warning btn-edit-coupon">Sửa</button>

@@ -44,7 +44,7 @@
                             <td>{{ $each->address }}</td>
                             <td>{{ $each->sum_price }}</td>
                             <td><div class="{{ $each->displayStatus() }}">{{ $each->printStatus() }}</div></td>
-                            <td>{{ $each->created_at }}</td>
+                            <td>{{ DateTimeForHuman($each->created_at) }}</td>
                             <td>
                                 <form action="{{ route('order.showOrderDetails', $each->id) }}" method="get">
                                     <button data-toggle="modal" data-target="#view-order-modal" type="button" class="btn btn-info btn-view-order">Xem</button>

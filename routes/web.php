@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 //user process
 Route::controller(UserController::class)->group(function (){
     Route::name('user.')->group(function (){

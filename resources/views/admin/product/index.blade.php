@@ -77,7 +77,7 @@
                             <td>{{ $each->price }}</td>
                             <td>{{ $each->amount }}</td>
                             <td>{{ $each->user->name }}</td>
-                            <td>{{ $each->created_at }}</td>
+                            <td>{{ DateTimeForHuman($each->created_at) }}</td>
                             <td>
                                 <form action="{{ route('product.show', $each->id) }}" method="get">
                                     <button data-toggle="modal" data-target="#edit-product-modal" type="button" class="btn btn-warning btn-edit-product">Sửa</button>

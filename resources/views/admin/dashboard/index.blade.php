@@ -8,7 +8,7 @@
                     <div class="row align-items-center">
                         <div class="col-12 text-center">
                             <h5 class="text-muted font-weight-normal mt-0 text-truncate">Tổng lượt truy cập</h5>
-                            <h3 class="my-2 py-1">9,184</h3>
+                            <h3 class="my-2 py-1">{{ $allvisitor }}</h3>
                         </div>
                     </div> <!-- end row-->
                 </div> <!-- end card-body -->
@@ -20,9 +20,15 @@
                     <div class="row align-items-center">
                         <div class="col-12 text-center">
                             <h5 class="text-muted font-weight-normal mt-0 text-truncate">Lượt truy cập tháng này</h5>
-                            <h3 class="my-2 py-1">9,184</h3>
+                            <h3 class="my-2 py-1">{{ $visitorInThisMonth }}</h3>
                             <p class="mb-0 text-muted">
-                                <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 3.27%</span>
+                                @if ($visitorPercent >= 0)
+                                <span class="text-success mr-2">
+                                    <i class="mdi mdi-arrow-up-bold"></i>{{ $visitorPercent }} %</span>
+                                @else
+                                <span class="text-danger mr-2">
+                                    <i class="mdi mdi-arrow-down-bold"></i>{{ $visitorPercent }} %</span>
+                                @endif
                             </p>
                         </div>
                     </div> <!-- end row-->
@@ -34,10 +40,16 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-12 text-center">
-                            <h5 class="text-muted font-weight-normal mt-0 text-truncate">Tổng khách ghé thăm</h5>
-                            <h3 class="my-2 py-1">9,184</h3>
+                            <h5 class="text-muted font-weight-normal mt-0 text-truncate">Sản phẩm bán trong tháng</h5>
+                            <h3 class="my-2 py-1">{{ $productInThisMonth }}</h3>
                             <p class="mb-0 text-muted">
-                                <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 3.27%</span>
+                                @if ($productPercent >= 0)
+                                <span class="text-success mr-2">
+                                    <i class="mdi mdi-arrow-up-bold"></i>{{ $productPercent }} %</span>
+                                @else
+                                <span class="text-danger mr-2">
+                                    <i class="mdi mdi-arrow-down-bold"></i>{{ $productPercent }} %</span>
+                                @endif
                             </p>
                         </div>
                     </div> <!-- end row-->
@@ -49,10 +61,16 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-12 text-center">
-                            <h5 class="text-muted font-weight-normal mt-0 text-truncate">Tổng khách ghé thăm</h5>
-                            <h3 class="my-2 py-1">9,184</h3>
+                            <h5 class="text-muted font-weight-normal mt-0 text-truncate">Doanh thu tháng</h5>
+                            <h3 class="my-2 py-1">{{ $tongDoanhThuThang }}</h3>
                             <p class="mb-0 text-muted">
-                                <span class="text-success mr-2"><i class="mdi mdi-arrow-up-bold"></i> 3.27%</span>
+                                @if ($percentDoanhThu >= 0)
+                                <span class="text-success mr-2">
+                                    <i class="mdi mdi-arrow-up-bold"></i>{{ $percentDoanhThu }} %</span>
+                                @else
+                                <span class="text-danger mr-2">
+                                    <i class="mdi mdi-arrow-down-bold"></i>{{ $percentDoanhThu }} %</span>
+                                @endif
                             </p>
                         </div>
                     </div> <!-- end row-->

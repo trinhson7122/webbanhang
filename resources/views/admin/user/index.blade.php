@@ -42,7 +42,7 @@
                             <td>{{ $each->email }}</td>
                             <td>{{ $each->phone }}</td>
                             <td>{{ $each->address }}</td>
-                            <td>{{ $each->created_at }}</td>
+                            <td>{{ DateTimeForHuman($each->created_at) }}</td>
                             <td>
                                 <div>
                                     <form action="{{ route('user.destroy', $each->id) }}" method="post">

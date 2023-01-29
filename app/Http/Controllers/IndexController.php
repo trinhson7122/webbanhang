@@ -8,6 +8,7 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,9 @@ class IndexController extends Controller
 {
     public function index(Request $request)
     {
+        Visitor::create([
+            'ip' => $request->ip(),
+        ]);
         $title = 'Trang chủ';
         $count = 4;
         $per_page = 8;
