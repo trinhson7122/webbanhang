@@ -61,4 +61,11 @@ $(document).ready(function () {
         let action = $(this).parent('form')[0].action;
         $('#update-status-order-modal form').attr('action', action);
     });
+    //
+    
+
+    let chartProductPerMonth = $('#sanphamdaban')[0];
+    getProductSaledPerMonth(chartProductPerMonth.dataset.url, chartProductPerMonth);
+    let chartOrderPerMonth = $('#yeucau')[0];
+    getOrderPerMonth(chartOrderPerMonth.dataset.url, chartOrderPerMonth);
 });

@@ -82,3 +82,57 @@ function loadPage(find, idfill)
 {
     $(find).load(location.href + " " + idfill);
 }
+
+function getProductSaledPerMonth(url, element)
+{
+    $.ajax({
+        type: "get",
+        url: url,
+        dataType: "json",
+        success: function (response) {
+            let months = [];
+            let arrData = [];
+            $.map(response, function (elementOrValue, indexOrKey) {
+                months.push(indexOrKey);
+                arrData.push(elementOrValue);
+            });
+            let series = [{
+                name : 'Sản phẩm',
+                data : arrData,
+            }];
+            showChart('Sản phẩm bán trong năm', element, series, months);
+        }
+    });
+}
+
+function getOrderPerMonth(url, element)
+{
+    $.ajax({
+        type: "get",
+        url: url,
+        dataType: "json",
+        success: function (response) {
+            let months = [];
+            let arrDataSuccess = [];
+            let arrDataCance = [];
+            $.map(response.shipped, function (elementOrValue, indexOrKey) {
+                months.push(indexOrKey);
+                arrDataSuccess.push(elementOrValue);
+            });
+            $.map(response.cancelled, function (elementOrValue, indexOrKey) {
+                arrDataCance.push(elementOrValue);
+            });
+            let series = [
+                {
+                    name : 'Thành công',
+                    data : arrDataSuccess,
+                },
+                {
+                    name : 'Hủy',
+                    data : arrDataCance,
+                },
+            ];
+            showChart('Đơn hàng trong năm', element, series, months);
+        }
+    });
+}

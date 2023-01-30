@@ -8,6 +8,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('artisan/clear', function(){
+    //return $command;
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    return 'thanh cong ';
+});
+Route::get('artisan/deployment', function(){
+    //return $command;
+    Artisan::call('view:cache');
+    Artisan::call('route:cache');
+    Artisan::call('config:cache');
+    return 'thanh cong ';
+});
 //user process
 Route::controller(UserController::class)->group(function (){
     Route::name('user.')->group(function (){
@@ -99,6 +114,8 @@ Route::middleware('admin')->group(function(){
         Route::controller(OrderController::class)->group(function (){
             Route::name('order.')->group(function (){
                 Route::delete('order/{order}', 'destroy')->name('destroy');
+                Route::get('orderDetailsPerMonth', 'orderDetailPerMonth')->name('order_detail_per_month');
+                Route::get('orderPerMonth', 'orderPerMonth')->name('order_per_month');
             });
         });
         //

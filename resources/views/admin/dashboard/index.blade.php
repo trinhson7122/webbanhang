@@ -78,4 +78,12 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="sanphamdaban" data-url="{{ route('order.order_detail_per_month') }}"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="yeucau" data-url="{{ route('order.order_per_month') }}"></div>
+        </div>
+    </div>
 @endsection

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Cart;
 use App\Models\CartDetail;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -149,5 +151,77 @@ class OrderController extends Controller
             $arrData['coupon'] = $coupon;
         }
         return Response($arrData);
+    }
+
+    public function orderDetailPerMonth()
+    {
+        $orderDetails = OrderDetail::query()->whereHas('order', function($q){
+            $q->where('status', '=', OrderStatus::Shipped);
+        })->get();
+        $arr = [
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+            6 => 0,
+            7 => 0,
+            8 => 0,
+            9 => 0,
+            10 => 0,
+            11 => 0,
+            12 => 0,
+        ];
+        foreach($orderDetails as $item){
+            $arr[$item->created_at->month]++;
+        }
+        return Response($arr);
+    }
+    public function orderPerMonth()
+    {
+        $now = Carbon::now();
+        $orderDetails = Order::all();
+        $arrShipped = [
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+            6 => 0,
+            7 => 0,
+            8 => 0,
+            9 => 0,
+            10 => 0,
+            11 => 0,
+            12 => 0,
+        ];
+        $arrCancelled = [
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+            5 => 0,
+            6 => 0,
+            7 => 0,
+            8 => 0,
+            9 => 0,
+            10 => 0,
+            11 => 0,
+            12 => 0,
+        ];
+        foreach($orderDetails as $item){
+            if($now->year == $item->created_at->year){
+                if($item->status == OrderStatus::Shipped){
+                    $arrShipped[$item->created_at->month]++;
+                }
+                if($item->status == OrderStatus::Cancelled){
+                    $arrCancelled[$item->created_at->month]++;
+                }
+            }
+        }
+        return Response([
+            'shipped' => $arrShipped,
+            'cancelled' => $arrCancelled,
+        ]);
     }
 }
