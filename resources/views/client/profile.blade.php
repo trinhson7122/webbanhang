@@ -17,7 +17,7 @@
 
     <div class="card text-center">
         <div class="card-body">
-            <img src="{{ $user->image }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+            <img src="{{ config('app.url') . $user->image }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
             <h4 class="mb-0 mt-2">{{ $user->name }}</h4>
             <a href="{{ route('profile.edit', $user->id) }}" class="btn btn-info btn-sm mb-2">Sửa hồ sơ</a>

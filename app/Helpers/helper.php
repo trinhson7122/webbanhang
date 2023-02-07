@@ -26,6 +26,19 @@ function DateTimeForHuman($time){
     return $dt->diffForHumans(Carbon::now());
 }
 
+function getProductCountDiffInMonth($modelhasCreated_at, $diff = 0)
+{
+    $count = 0;
+    $now = Carbon::now();
+    foreach($modelhasCreated_at as $item)
+    {
+        $dt = new Carbon($item->created_at);
+        if($dt->diffInMonths($now) == $diff){
+            $count += $item->amount;
+        }
+    }
+    return $count;
+}
 function getCountDiffInMonth($modelhasCreated_at, $diff = 0)
 {
     $count = 0;

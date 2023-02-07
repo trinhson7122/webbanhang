@@ -58,6 +58,12 @@
                     <span>Quản lý mã giảm giá</span>
                 </a>
             </li>
+            <li class="side-nav-item">
+                <a href="{{ route('admin.slide_manager') }}" class="side-nav-link">
+                    <i class="uil-processor"></i>
+                    <span>Quản lý slide</span>
+                </a>
+            </li>
         </ul>
         <!-- End Sidebar -->
         <div class="clearfix"></div>

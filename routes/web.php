@@ -7,6 +7,7 @@ use App\Http\Controllers\CouponController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SlidesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,11 @@ Route::get('artisan/deployment', function(){
     Artisan::call('view:cache');
     Artisan::call('route:cache');
     Artisan::call('config:cache');
+    return 'thanh cong ';
+});
+Route::get('artisan/{call}', function($call){
+    //return $command;
+    Artisan::call('$call');
     return 'thanh cong ';
 });
 //user process
@@ -126,10 +132,19 @@ Route::middleware('admin')->group(function(){
                 Route::get('user_manager', 'userManager')->name('user_manager');
                 Route::get('coupon_manager', 'couponManager')->name('coupon_manager');
                 Route::get('order_manager', 'orderManager')->name('order_manager');
+                Route::get('slide_manager', 'slideManager')->name('slide_manager');
             });
         });
 
+        Route::controller(SlidesController::class)->group(function (){
+            Route::name('slide.')->group(function (){
+                Route::post('slide_store', 'store')->name('store');
+                Route::put('slide_update/{id}', 'update')->name('update');
+                Route::delete('slide_destroy/{id}', 'destroy')->name('destroy');
+            });
+        });
         Route::get('logout', [AuthController::class, 'adminLogout'])->name('auth.admin_logout');
 
     });
+    
 });

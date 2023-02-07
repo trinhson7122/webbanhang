@@ -34,7 +34,7 @@
                                        @foreach (session()->get('cart') as $item)
                                         <tr>
                                             <td>
-                                                <img src="{{ $item['image'] }}" alt="product-img" title="product-img" class="rounded mr-3" height="64">
+                                                <img src="{{ config('app.url') . $item['image'] }}" alt="product-img" title="product-img" class="rounded mr-3" height="64">
                                                 <p class="m-0 d-inline-block align-middle font-16">
                                                     {{ $item['name'] }}
                                                 </p>
@@ -90,15 +90,15 @@
                                         <tbody>
                                             <tr>
                                                 <td>Tổng tiền :</td>
-                                                <td>{{ printMoney(arrSumCart(session()->get('cart'))) }}</td>
+                                                <td>{{ printMoney($sumCart) }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Discount : </td>
-                                                <td>-{{ printMoney(arrSumCart(session()->get('cart')) * $discount / 100) }}</td>
+                                                <td>-{{ printMoney($discount) }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Thành tiền :</th>
-                                                <td>{{ printMoney(arrSumCart(session()->get('cart')) * (1 - $discount / 100)) }}</td>
+                                                <td>{{ printMoney($sumCart - $discount) }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

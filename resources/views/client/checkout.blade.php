@@ -112,7 +112,7 @@
                                                     @foreach ($cartDetails as $item)
                                                     <tr>
                                                         <td>
-                                                            <img src="{{ $item->product->image }}" alt="contact-img" title="contact-img" class="rounded mr-2" height="48">
+                                                            <img src="{{ config('app.url') . $item->product->image }}" alt="contact-img" title="contact-img" class="rounded mr-2" height="48">
                                                             <p class="m-0 d-inline-block align-middle">
                                                                 <span class="text-body font-weight-semibold">{{ $item->product->name }}</span>
                                                                 <br>
@@ -140,7 +140,7 @@
                                                                 Giảm giá: 
                                                             </span>
                                                             <span>
-                                                                -{{ printMoney($cart->sumCart() * ($discount / 100)) }}
+                                                                -{{ printMoney($discount) }}
                                                             </span>
                                                         </td>
                                                     </tr>
@@ -151,7 +151,7 @@
                                                                     Thành tiền: 
                                                                 </span>
                                                                 <span>
-                                                                    {{ printMoney($cart->sumCart() * (1 - $discount / 100)) }}
+                                                                    {{ printMoney($cart->sumCart() - $discount) }}
                                                                 </span>
                                                             </td>
                                                         </tr>

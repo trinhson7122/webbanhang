@@ -62,6 +62,10 @@ $(document).ready(function () {
         $('#update-status-order-modal form').attr('action', action);
     });
     //
+    // $(document).on('change', '.submit-show-slide', function(e){
+    //     $(this).parent('form').submit();
+    // });
+    //
     
 
     let chartProductPerMonth = $('#sanphamdaban')[0];

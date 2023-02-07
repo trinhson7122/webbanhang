@@ -35,7 +35,11 @@ class StoreCouponRequest extends FormRequest
             'amount' => [
                 'required',
                 'numeric',
-            ]
+            ],
+            'max' => [
+                'required',
+                'numeric',
+            ],
         ];
     }
     public function messages()
@@ -46,6 +50,8 @@ class StoreCouponRequest extends FormRequest
             'discount.numeric' => '% giảm giá phải là số', 
             'amount.required' => 'Số lượng mã giảm giá không được để trống', 
             'amount.numeric' => 'Số lượng mã giảm giá phải là số', 
+            'max.required' => 'Số tiền giảm tối đa không được để trống', 
+            'max.numeric' => 'Số tiền giảm tối đa phải là số', 
         ];
     }
 }

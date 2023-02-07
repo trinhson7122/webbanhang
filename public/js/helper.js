@@ -18,6 +18,7 @@ function setInputCoupon(selectorParent, response) {
     $(selectorParent + " input[name='name']").val(response.name);
     $(selectorParent + " input[name='discount']").val(response.discount);
     $(selectorParent + " input[name='amount']").val(response.amount);
+    $(selectorParent + " input[name='max']").val(response.max);
     let form = $(selectorParent + " form");
     let arr = form.attr('action').split('/');
     let url = '';
@@ -31,6 +32,7 @@ function setInputCoupon(selectorParent, response) {
 function fillOrderDetails(selectorModal, response){
     let table = $(selectorModal + ' tbody');
     let sum = 0;
+    let note = response.order.note ? response.order.note : 'Không';
     table.html('');
     response.orderDetails.forEach(item => {
         sum += item.amount * item.product.price;
@@ -48,6 +50,13 @@ function fillOrderDetails(selectorModal, response){
             ${item.amount * item.product.price} đ
             </td>
         </tr>
+        `;
+        content += `
+            <tr>
+                <td colspan='2' class="text-left">Ghi chú: 
+                ${note}
+                </td>
+            </tr>
         `;
         table.append(content);
     });
@@ -67,6 +76,13 @@ function fillOrderDetails(selectorModal, response){
     `;
     table.append(content);
     if(response.coupon){
+        let discount = 0;
+        if(sum * (response.coupon.discount / 100) > response.coupon.max){
+            discount = response.coupon.max;
+        }
+        else{
+            discount = sum * (response.coupon.discount / 100);
+        }
         content = `
         <tr class="text-right">
             <tr class="text-right">
@@ -75,7 +91,7 @@ function fillOrderDetails(selectorModal, response){
                         Mã giảm giá: (${response.coupon.name})
                     </span>
                     <span class="sum_order">
-                       - ${response.coupon.discount / 100 * sum} đ
+                       - ${discount} đ
                     </span>
                 </td>
             </tr>

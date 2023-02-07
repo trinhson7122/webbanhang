@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('coupons', function (Blueprint $table) {
+        Schema::create('slides', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('created_by_id');
-            $table->string('name')->unique();
-            $table->integer('discount');
-            $table->integer('amount');
-            $table->unsignedDouble('max');
+            $table->string('image');
+            $table->unsignedBigInteger('user_id');
+            $table->boolean('display')->default(false);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coupons');
+        Schema::dropIfExists('slides');
     }
 };

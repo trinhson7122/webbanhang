@@ -6,6 +6,32 @@
 
         <!-- Pricing Title-->
         <div class="text-center mt-5">
+            <h3 class="mb-2 text-dark">SẢN PHẨM BÁN CHẠY</h3>
+        </div>
+
+        <!-- Plans -->
+        <div class="row mt-sm-5 mt-3 mb-3">
+            @foreach ($topSaleProducts as $item)
+                <div class="col-md-3">
+                    <div class="card card-pricing card-pricing-recommended">
+                        <div class="card-body text-center">
+                            <div class="card-pricing-plan-tag">Lượt mua - {{ $item->sum }}</div>
+                            <img class="img-fluid" src="{{ config('app.url') . $item->product->image }}" alt="product">
+                            <p class="card-pricing-plan-name font-weight-bold text-uppercase mt-2">{{ $item->product->name }}</p>
+                            <h2>{{ printMoney($item->product->price) }}</h2>
+                            <form action="{{ route('cart.store') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $item->product->id }}">
+                                <button type="button" class="btn-add-to-cart btn btn-warning mt-4 mb-2">Thêm vào giỏ hàng</button>
+                            </form>
+                        </div>
+                    </div> <!-- end Pricing_card -->
+                </div> <!-- end col -->
+            @endforeach
+        </div>
+
+        <!-- Pricing Title-->
+        <div class="text-center mt-5">
             <h3 class="mb-2 text-dark">SẢN PHẨM MỚI</h3>
         </div>
 
@@ -15,7 +41,7 @@
                 <div class="col-md-3">
                     <div class="card card-pricing">
                         <div class="card-body text-center">
-                            <img class="img-fluid" src="{{ $item->image }}" alt="product">
+                            <img class="img-fluid" src="{{ config('app.url') . $item->image }}" alt="product">
                             <p class="card-pricing-plan-name font-weight-bold text-uppercase mt-2">{{ $item->name }}</p>
                             <h2>{{ printMoney($item->price) }}</h2>
                             <form action="{{ route('cart.store') }}" method="post">
@@ -28,6 +54,7 @@
                 </div> <!-- end col -->
             @endforeach
         </div>
+
         <!-- end row -->
         <!-- Pricing Title-->
         <div class="text-center mt-5">
@@ -40,7 +67,7 @@
                 <div class="col-md-3">
                     <div class="card card-pricing">
                         <div class="card-body text-center">
-                            <img class="img-fluid" src="{{ $item->image }}" alt="product">
+                            <img class="img-fluid" src="{{ config('app.url') . $item->image }}" alt="product">
                             <p class="card-pricing-plan-name font-weight-bold text-uppercase mt-2">{{ $item->name }}</p>
                             <h2>{{ printMoney($item->price) }}</h2>
                             <form action="{{ route('cart.store') }}" method="post">

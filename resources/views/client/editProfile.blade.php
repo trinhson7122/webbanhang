@@ -19,7 +19,7 @@
                     <form enctype="multipart/form-data" action="{{ route('profile.update', $user->id) }}" method="post">
                         @csrf
                         @method('put')
-                        <img src="{{ $user->image }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+                        <img src="{{ config('app.url') . $user->image }}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
                         <h4 class="mb-0 mt-2">{{ $user->name }}</h4>
                         <div class="text-center mt-3">
                             <h4 class="font-13 text-uppercase">Thông tin cá nhân :</h4>

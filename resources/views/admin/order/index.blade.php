@@ -56,11 +56,13 @@
                                 </form>
                             </td>
                             <td>
-                                <form action="{{ route('order.destroy', $each->id) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="confirm-submit btn btn-danger">Xóa</button>
-                                </form>
+                                @can('is-super-admin', auth()->user())
+                                    <form action="{{ route('order.destroy', $each->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="confirm-submit btn btn-danger">Xóa</button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

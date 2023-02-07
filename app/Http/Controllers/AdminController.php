@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Slides;
 use App\Models\User;
 use App\Models\Visitor;
 use Carbon\Carbon;
@@ -28,8 +29,8 @@ class AdminController extends Controller
         $orderDetails = OrderDetail::query()->whereHas('order', function($q){
             $q->where('status', '=', OrderStatus::Shipped);
         })->get();
-        $productInThisMonth = getCountDiffInMonth($orderDetails);
-        $productPercent = percent($productInThisMonth, getCountDiffInMonth($orderDetails, 1));
+        $productInThisMonth = getProductCountDiffInMonth($orderDetails);
+        $productPercent = percent($productInThisMonth, getProductCountDiffInMonth($orderDetails, 1));
         //Doanh thu
         $orders = Order::query()->where('status', '=', OrderStatus::Shipped)->get();
         $tongDoanhThuThang = sumWithDateTime($orders, 0, 'sum_price');
@@ -113,7 +114,7 @@ class AdminController extends Controller
         $this->title = 'Coupon Manager';
         $per_page = 10;
         $s = $search->get('search');
-        $coupons = Coupon::query()->where('name', 'like', "%$s%")
+        $coupons = Coupon::query()->where('name', 'like', "%$s%")->orderByDesc('id')
         ->paginate($per_page)->appends('search', $s);
         return view('admin.coupon.index', [
             'title' => $this->title,
@@ -131,6 +132,16 @@ class AdminController extends Controller
         return view('admin.order.index', [
             'title' => $this->title,
             'orders' => $orders,
+        ]);
+    }
+
+    public function slideManager()
+    {
+        $title = 'Slide Manage';
+        $slides = Slides::query()->orderByDesc('id')->get();
+        return view('admin.slide.index', [
+            'title' => $title,
+            'slides' => $slides,
         ]);
     }
 }

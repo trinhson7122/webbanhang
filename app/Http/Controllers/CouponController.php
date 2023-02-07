@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCouponRequest;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CouponController extends Controller
 {
@@ -42,6 +43,7 @@ class CouponController extends Controller
             'name' => strtoupper($validated['name']),
             'discount' => $validated['discount'],
             'amount' => $validated['amount'],
+            'max' => $validated['max'],
         ]);
         return to_route('admin.coupon_manager')->with('message', 'Thêm mã giảm giá thành công');
     }
@@ -78,14 +80,18 @@ class CouponController extends Controller
      */
     public function update(StoreCouponRequest $request, $id)
     {
-        $coupon = Coupon::find($id);
-        $validated = $request->validated();
-        $coupon->update([
-            'name' => $validated['name'],
-            'discount' => $validated['discount'],
-            'amount' => $validated['amount'],
-        ]);
-        return to_route('admin.coupon_manager')->with('message', 'Cập nhật mã giảm giá thành công');
+        if(Gate::allows('is-super-admin', auth()->user())){
+            $coupon = Coupon::find($id);
+            $validated = $request->validated();
+            $coupon->update([
+                'name' => $validated['name'],
+                'discount' => $validated['discount'],
+                'amount' => $validated['amount'],
+                'max' => $validated['max'],
+            ]);
+            return to_route('admin.coupon_manager')->with('message', 'Cập nhật mã giảm giá thành công');
+        }
+        abort(403);
     }
 
     /**
@@ -96,9 +102,12 @@ class CouponController extends Controller
      */
     public function destroy($id)
     {
-        $coupon = Coupon::find($id);
-        $coupon->delete();
-        return to_route('admin.coupon_manager')->with('message', 'Xóa mã giảm giá thành công');
+        if(Gate::allows('is-super-admin', auth()->user())){
+            $coupon = Coupon::find($id);
+            $coupon->delete();
+            return redirect()->back()->with('message', 'Xóa mã giảm giá thành công');
+        }
+        abort(403);
     }
 
     public function find(Request $request)
@@ -108,7 +117,7 @@ class CouponController extends Controller
         ]);
         $coupon = Coupon::query()->where('name', '=', $validated['name'])->get()->first();
         //dd($coupon);
-        if($coupon != null){
+        if($coupon != null && $coupon->amount > 0){
             session()->put('coupon_id', $coupon->id);
         }
         else{

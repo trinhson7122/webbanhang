@@ -10,46 +10,48 @@
     </div>
     <!-- end page title -->
     <div class="container-fluid">
-        <div class="row">
-            <table class="table table-borderless table-response table-centered mb-0">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Mã đơn hàng</th>
-                        <th>Ghi chú</th>
-                        <th>Địa chỉ</th>
-                        <th>Tình trạng</th>
-                        <th>Tổng tiền</th>
-                        <th style="width: 50px;"></th>
-                        <th style="width: 50px;"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($orders as $item)
+        <div class="row justify-content-center">
+            <div class="col-auto justify-content-center">
+                <table align="center" class="table table-borderless table-responsive table-centered mb-0">
+                    <thead class="thead-light">
                         <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->note }}</td>
-                            <td>{{ $item->address }}</td>
-                            <td><div class="{{ $item->displayStatus() }}">{{ $item->printStatus() }}</div></td>
-                            <td>{{ printMoney($item->sum_price) }}</td>
-                            <td>
-                                <form action="{{ route('order.showOrderDetails', $item->id) }}" method="get">
-                                    <button data-toggle="modal" data-target="#view-order-modal" type="button" class="btn btn-info btn-view-order1">Xem</button>
-                                </form>
-                            </td>
-                            @if ($item->status == 1)
+                            <th>Mã đơn hàng</th>
+                            <th>Ghi chú</th>
+                            <th>Địa chỉ</th>
+                            <th>Tình trạng</th>
+                            <th>Tổng tiền</th>
+                            <th style="width: 50px;"></th>
+                            <th style="width: 50px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($orders as $item)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->note }}</td>
+                                <td>{{ $item->address }}</td>
+                                <td><div class="{{ $item->displayStatus() }}">{{ $item->printStatus() }}</div></td>
+                                <td>{{ printMoney($item->sum_price) }}</td>
                                 <td>
-                                    <form action="{{ route('order.update', $item->id) }}" method="post">
-                                        @csrf
-                                        @method('put')
-                                        <input type="hidden" name="status" value="0">
-                                        <button class="btn btn-danger">Hủy</button>
+                                    <form action="{{ route('order.showOrderDetails', $item->id) }}" method="get">
+                                        <button data-toggle="modal" data-target="#view-order-modal" type="button" class="btn btn-info btn-view-order1">Xem</button>
                                     </form>
                                 </td>
-                            @endif
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                                @if ($item->status == 1)
+                                    <td>
+                                        <form action="{{ route('order.update', $item->id) }}" method="post">
+                                            @csrf
+                                            @method('put')
+                                            <input type="hidden" name="status" value="0">
+                                            <button class="btn btn-danger">Hủy</button>
+                                        </form>
+                                    </td>
+                                @endif
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <!-- View -->

@@ -44,6 +44,7 @@
                             <td>{{ $each->address }}</td>
                             <td>{{ DateTimeForHuman($each->created_at) }}</td>
                             <td>
+                                @can('is-super-admin', auth()->user())
                                 <div>
                                     <form action="{{ route('user.destroy', $each->id) }}" method="post">
                                         @csrf
@@ -51,6 +52,7 @@
                                         <button class="confirm-submit btn btn-danger">Xóa</button>
                                     </form>
                                 </div>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

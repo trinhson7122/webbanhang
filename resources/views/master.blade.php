@@ -17,12 +17,14 @@
         <link href="{{ asset('/css/app-creative.min.css') }}" rel="stylesheet" type="text/css" id="light-style" />
         <link href="{{ asset('/css/app-creative-dark.min.css') }}" rel="stylesheet" type="text/css" id="dark-style" />
         <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" id="dark-style" />
+        {{-- @livewireStyles --}}
     </head>
 
     <body class="loading1" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false'>
         <div class="wrapper">
             @yield('content')
         </div>
+        {{-- @livewireScripts --}}
         <script src="{{ asset('/js/vendor.min.js') }}"></script>
         <script src="{{ asset('/js/app.min.js') }}"></script>
         <script src="{{ asset('js/helper.js') }}"></script>

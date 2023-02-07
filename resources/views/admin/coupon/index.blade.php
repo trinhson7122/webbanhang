@@ -33,6 +33,7 @@
                         <th>#</th>
                         <th>Tên mã</th>
                         <th>Giảm (%)</th>
+                        <th>Tối đa</th>
                         <th>Số lượng còn</th>
                         <th>Thêm bởi</th>
                         <th>Thêm lúc</th>
@@ -46,9 +47,11 @@
                             <td>{{ $each->id }}</td>
                             <td>{{ $each->name }}</td>
                             <td>{{ $each->discount }}</td>
+                            <td>{{ printMoney($each->max) }}</td>
                             <td>{{ $each->amount }}</td>
                             <td>{{ $each->user->name }}</td>
                             <td>{{ DateTimeForHuman($each->created_at) }}</td>
+                            @can('is-super-admin', auth()->user())
                             <td>
                                 <form action="{{ route('coupon.show', $each->id) }}" method="get">
                                     <button data-toggle="modal" data-target="#edit-coupon-modal" type="button" class="btn btn-warning btn-edit-coupon">Sửa</button>
@@ -61,6 +64,7 @@
                                     <button class="confirm-submit btn btn-danger">Xóa</button>
                                 </form>
                             </td>
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>
@@ -92,6 +96,11 @@
                             <div class="form-group">
                                 <label>Số lượng mã</label>
                                 <input type="number" name="amount" class="form-control" value="100">
+                                <div class="alert-danger error-amount error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Giảm giá tối đa</label>
+                                <input type="number" name="max" class="form-control" value="20000">
                                 <div class="alert-danger error-amount error"></div>
                             </div>
                         </div>
@@ -129,6 +138,11 @@
                             <div class="form-group">
                                 <label>Số lượng mã</label>
                                 <input type="number" name="amount" class="form-control">
+                                <div class="alert-danger error-amount error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Giảm giá tối đa</label>
+                                <input type="number" name="max" class="form-control">
                                 <div class="alert-danger error-amount error"></div>
                             </div>
                         </div>

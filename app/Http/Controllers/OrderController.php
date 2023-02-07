@@ -12,6 +12,7 @@ use App\Models\OrderDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -52,7 +53,12 @@ class OrderController extends Controller
         if($coupon && $coupon->amount > 0){
             $coupon->amount -= 1;
             $coupon->save();
-            $sumCart = $sumCart * (1 - $coupon->discount / 100);
+            if($sumCart * ($coupon->discount / 100) > $coupon->max){
+                $sumCart -= (float)$coupon->max;
+            }
+            else{
+                $sumCart -= $sumCart * ($coupon->discount / 100);
+            }
         }
         //dd($sumCart);
         $arrNewOrder = [
@@ -128,14 +134,17 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $order = Order::find($id);
-        $orderDetails = OrderDetail::query()->where('order_id', '=', $order->id)->get();
-        foreach($orderDetails as $item)
-        {
-            $item->delete();
+        if(Gate::allows('is-super-admin', auth()->user())){
+            $order = Order::find($id);
+            $orderDetails = OrderDetail::query()->where('order_id', '=', $order->id)->get();
+            foreach($orderDetails as $item)
+            {
+                $item->delete();
+            }
+            $order->delete();
+            return to_route('admin.order_manager')->with('message', 'Xóa yêu cầu thành công');
         }
-        $order->delete();
-        return to_route('admin.order_manager')->with('message', 'Xóa yêu cầu thành công');
+        abort(403);
     }
 
     public function showOrderDetails(Request $request, $id)
@@ -173,7 +182,7 @@ class OrderController extends Controller
             12 => 0,
         ];
         foreach($orderDetails as $item){
-            $arr[$item->created_at->month]++;
+            $arr[$item->created_at->month] += $item->amount;
         }
         return Response($arr);
     }

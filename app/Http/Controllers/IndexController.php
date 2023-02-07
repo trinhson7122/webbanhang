@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Models\Cart;
 use App\Models\CartDetail;
 use App\Models\Coupon;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Slides;
 use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
@@ -23,13 +27,21 @@ class IndexController extends Controller
         $count = 4;
         $per_page = 8;
         $s = $request->get('search');
-        $newProducts = Product::query()->orderBy('id', 'desc')->where('name', 'like', "%$s%")->get()->take($count);
+        $slides = Slides::query()->where('display', '=', '1')->get()->take(3);
+        $newProducts = Product::query()->orderBy('id', 'desc')->get()->take($count);
         $products = Product::query()->where('name', 'like', "%$s%")
         ->simplePaginate($per_page)->appends('search', $s);
+        $topSaleProducts = OrderDetail::query()->whereHas('order', function ($q){
+            $q->where('status', '=', OrderStatus::Shipped);
+        })->groupBy('product_id')->selectRaw('sum(amount) as sum, product_id')->orderByDesc('sum')->with('product')->get([
+            'sum', 'product_id'
+        ])->take($count);
         return view('client.index', [
             'title' => $title,
             'newProducts' => $newProducts,
             'products' => $products,
+            'topSaleProducts' => $topSaleProducts,
+            'slides' => $slides,
         ]);
     }
 
@@ -37,6 +49,7 @@ class IndexController extends Controller
     {
         $title = 'Giỏ hàng';
         $coupon = Coupon::find(session()->get('coupon_id'));
+        $sumCart = 0;
         if(Auth::check()){
             //nếu người dùng đã có giỏ hàng thì reset session và tạo session dựa trên CartDetail
             $cart = Cart::query()->where('user_id', '=', auth()->user()->id)->first();
@@ -56,6 +69,7 @@ class IndexController extends Controller
                         'cart_detail_id' => $item->id,
                     ];
                 }
+                $sumCart = arrSumCart($scart);
                 session()->put('cart', $scart);
             }
             //nếu người dùng chưa có giỏ hàng thì thêm Cart và CartDetail vào dựa trên session
@@ -78,9 +92,16 @@ class IndexController extends Controller
         $arrData = [
             'title' => $title,
             'discount' => 0,
+            'sumCart' => $sumCart,
         ];
         if($coupon){
-            $arrData['discount'] = $coupon->discount;
+            if($sumCart * ($coupon->discount / 100) > $coupon->max){
+                $arrData['discount'] = $coupon->max;
+            }
+            else
+            {
+                $arrData['discount'] = arrSumCart($scart) * $coupon->discount / 100;
+            }
         }
         return view('client.cart', $arrData);
     }
@@ -101,6 +122,7 @@ class IndexController extends Controller
         $coupon = Coupon::find(session()->get('coupon_id'));
         $cart = Cart::query()->where('user_id', '=', auth()->user()->id)->first();
         $cartDetails = CartDetail::query()->where('cart_id', '=', $cart->id)->get();
+        $scart = session()->get('cart');
         $arrData = [
             'title' => $title,
             'cart' => $cart,
@@ -108,7 +130,13 @@ class IndexController extends Controller
             'discount' => 0,
         ];
         if($coupon){
-            $arrData['discount'] = $coupon->discount;
+            if($cart->sumCart() * ($coupon->discount / 100) > $coupon->max){
+                $arrData['discount'] = $coupon->max;
+            }
+            else
+            {
+                $arrData['discount'] = $cart->sumCart() * $coupon->discount / 100;
+            }
         }
         return view('client.checkout', $arrData);
     }

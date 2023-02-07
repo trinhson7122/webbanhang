@@ -72,7 +72,7 @@
                     @foreach ($products as $each)
                         <tr>
                             <td>{{ $each->id }}</td>
-                            <td><img src="{{ $each->image }}" width="100" alt="product"></td>
+                            <td><img src="{{ config('app.url') . $each->image }}" width="100" alt="product"></td>
                             <td>{{ $each->name }}</td>
                             <td>{{ $each->price }}</td>
                             <td>{{ $each->amount }}</td>
