@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -93,7 +94,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
-        return to_route('admin.product_manager')->with('message', 'Xóa sản phẩm thành công');
+        if(Gate::allows('is-super-admin', auth()->user())){
+            $product->delete();
+            return to_route('admin.product_manager')->with('message', 'Xóa sản phẩm thành công');
+        }
+        abort(403);
     }
 }

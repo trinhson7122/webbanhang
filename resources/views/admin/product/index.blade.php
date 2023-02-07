@@ -84,11 +84,13 @@
                                 </form>
                             </td>
                             <td>
+                                @can('is-super-admin', auth()->user())
                                 <form action="{{ route('product.destroy', $each->id) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button  class="confirm-submit btn btn-danger">Xóa</button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

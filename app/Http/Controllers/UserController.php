@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -131,7 +132,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-        return to_route('admin.user_manager')->with('message', 'Xóa người dùng thành công');
+        if(Gate::allows('is-super-admin', auth()->user())){
+             $user->delete();
+            return to_route('admin.user_manager')->with('message', 'Xóa người dùng thành công');
+        }
+       abort(403);
     }
 }

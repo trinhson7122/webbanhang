@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Enums\UserRole;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -13,6 +14,7 @@ use App\Models\User;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
 {
@@ -101,8 +103,15 @@ class AdminController extends Controller
         $this->title = 'User Manager';
         $per_page = 10;
         $s = $search->get('search');
-        $users = User::query()->where('name', 'like', "%$s%")
-        ->paginate($per_page)->appends('search', $s);
+        if(Gate::allows('is-super-admin')){
+            $users = User::query()->where('name', 'like', "%$s%")
+            ->paginate($per_page)->appends('search', $s);
+        }
+        else{
+            $users = User::query()->where('name', 'like', "%$s%")
+            ->where('role', '=', UserRole::Client)
+            ->paginate($per_page)->appends('search', $s);
+        }
         return view('admin.user.index', [
             'title' => $this->title,
             'users' => $users,
