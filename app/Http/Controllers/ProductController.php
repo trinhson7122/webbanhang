@@ -96,6 +96,7 @@ class ProductController extends Controller
     {
         if(Gate::allows('is-super-admin', auth()->user())){
             $product->delete();
+            Storage::disk('public')->delete(str_replace('storage/', '', $product->image));
             return to_route('admin.product_manager')->with('message', 'Xóa sản phẩm thành công');
         }
         abort(403);

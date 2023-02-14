@@ -24,6 +24,22 @@
         <div class="wrapper">
             @yield('content')
         </div>
+        <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+        <script>
+
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('82083a76e9d04123f1cd', {
+            cluster: 'ap1'
+            });
+
+            var channel = pusher.subscribe('update-app');
+            channel.bind('load', function(data) {
+                location.reload();
+                //alert(1);
+            });
+        </script>
         {{-- @livewireScripts --}}
         <script src="{{ asset('/js/vendor.min.js') }}"></script>
         <script src="{{ asset('/js/app.min.js') }}"></script>

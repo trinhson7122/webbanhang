@@ -41,6 +41,8 @@ class SlidesController extends Controller
     {
         $slide = Slides::find($id);
         $slide->delete();
+
+        Storage::disk('public')->delete(str_replace('storage/', '', $slide->image));
         return redirect()->back()->with('message', 'Xóa slide thành công!');
     }
 }

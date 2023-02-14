@@ -133,7 +133,8 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if(Gate::allows('is-super-admin', auth()->user())){
-             $user->delete();
+            Storage::disk('public')->delete(str_replace('storage/', '', $user->image));
+            $user->delete();
             return to_route('admin.user_manager')->with('message', 'Xóa người dùng thành công');
         }
        abort(403);

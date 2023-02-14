@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\LoadApp;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('test', function (){
+    event(new LoadApp());
+});
 Route::get('artisan/clear', function(){
     //return $command;
     Artisan::call('view:clear');

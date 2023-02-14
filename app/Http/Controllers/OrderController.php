@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Events\UserStoredEvent;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Cart;
 use App\Models\CartDetail;
@@ -123,6 +124,7 @@ class OrderController extends Controller
         ]);
         $order->status = $request->get('status');
         $order->save();
+        UserStoredEvent::dispatch(auth()->user());
         return redirect()->back()->with('message', 'Cập nhật trạng thái thành công');
     }
 
