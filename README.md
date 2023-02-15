@@ -2,7 +2,7 @@
  
 ## Dự án tổng hợp kiến thức
 ### Công nghệ sử dụng
-- HTML5, CSS3, Javascript, PHP 8.1, Framework Laravel 9, Framework Jquery.
+- HTML5, CSS3, Bootstrap4 , Javascript, PHP 8.1, Laravel 9, Jquery.
 - MySQL
 - Pusher (Realtime)
 
