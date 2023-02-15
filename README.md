@@ -1,7 +1,7 @@
 # Project Web bán trà sữa
  
 ## Dự án tổng hợp kiến thức
-## Công nghệ sử dụng
+### Công nghệ sử dụng
 - HTML5, CSS3, Javascript, PHP 8.1, Framework Laravel 9, Framework Jquery.
 - MySQL
 - Pusher (Realtime)
