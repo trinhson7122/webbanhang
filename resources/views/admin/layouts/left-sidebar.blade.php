@@ -2,31 +2,31 @@
 <div class="left-side-menu">
 
     <!-- LOGO -->
-    {{-- <a href="{{ route('admin.index') }}" class="logo text-center logo-light">
+    <a href="{{ route('admin.index') }}" class="logo text-center logo-light">
         <span class="logo-lg">
-            <img src="assets/images/logo.png" alt="" height="16">
+            <img src="{{ asset('images/logo.png') }}" alt="" height="50">
         </span>
         <span class="logo-sm">
-            <img src="assets/images/logo_sm.png" alt="" height="16">
+            <img src="{{ asset('images/logo.png') }}" alt="" height="50">
         </span>
-    </a> --}}
+    </a>
 
     <!-- LOGO -->
-    {{-- <a href="{{ route('admin.index') }}" class="logo text-center logo-dark">
+    <a href="{{ route('admin.index') }}" class="logo text-center logo-dark">
         <span class="logo-lg">
-            <img src="assets/images/logo-dark.png" alt="" height="16">
+            <img src="{{ asset('images/logo.png') }}" alt="" height="50">
         </span>
         <span class="logo-sm">
-            <img src="assets/images/logo_sm_dark.png" alt="" height="16">
+            <img src="{{ asset('images/logo.png') }}" alt="" height="50">
         </span>
-    </a> --}}
+    </a>
     
     <div class="h-100" id="left-side-menu-container" data-simplebar>
 
         <!--- Sidemenu -->
         <ul class="metismenu side-nav">
 
-            <li class="side-nav-title side-nav-item">Navigation</li>
+            <li class="side-nav-title side-nav-item">Điều hướng</li>
 
             <li class="side-nav-item">
                 <a href="{{ route('admin.index') }}" class="side-nav-link">

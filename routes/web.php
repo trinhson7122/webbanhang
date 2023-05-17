@@ -31,19 +31,19 @@ Route::get('artisan/clear', function(){
     Artisan::call('view:clear');
     Artisan::call('route:clear');
     Artisan::call('config:clear');
-    return 'thanh cong ';
+    return 'artisan/clear thanh cong';
 });
 Route::get('artisan/deployment', function(){
     //return $command;
     Artisan::call('view:cache');
     Artisan::call('route:cache');
     Artisan::call('config:cache');
-    return 'thanh cong ';
+    return 'artisan/deployment thanh cong ';
 });
 Route::get('artisan/{call}', function($call){
     //return $command;
     Artisan::call('$call');
-    return 'thanh cong ';
+    return 'artisan/{call} thanh cong ';
 });
 //user process
 Route::controller(UserController::class)->group(function (){

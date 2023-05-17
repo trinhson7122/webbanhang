@@ -59,7 +59,7 @@
 
             <div class="row mt-3">
                 <div class="col-12 text-center">
-                    <p class="text-muted">Already have account? <a href="pages-login.html" class="text-muted ml-1"><b>Log In</b></a></p>
+                    <p class="text-muted">Đã có tài khoản? <a href="{{ route('auth.login') }}" class="text-muted ml-1"><b>Đăng nhập</b></a></p>
                 </div> <!-- end col-->
             </div>
             <!-- end row -->
